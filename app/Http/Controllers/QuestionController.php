@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller
 {
     public function viewAll(){
-        $question=Question::latest()->paginate(5);
+        \DB::enableQueryLog();
+        $question=Question::with('user')->latest()->paginate(5);
 
-        return view('question.view',compact('question'));
+        return view('question.view',compact('question'))->render();
+        dd(\DB::getQueryLog());
     }
 }

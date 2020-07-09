@@ -1,9 +1,10 @@
 @extends('layouts.app')
 @section('css')
-<style>
 
-   
-    </style>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
+
+    
 
 @endsection
 @section('content')
@@ -11,8 +12,14 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">All Questions</div>
-
+                <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <h2>All Questions</h2>
+                    <div class="ml-auto">
+                        <a href="{{route('CreateQuestions')}}" class="btn btn-outline-secondary">Ask Questions</a>
+                    </div>
+                    </div>
+                </div>
                 <div class="card-body">
                    @foreach($question as $questions)
                    <div class="media">
@@ -46,4 +53,14 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+        @if(session('flash_message'))
+        swal("Success!", "{!! session('flash_message') !!}", "success")
+        @endif
+
+    </script>
+
 @endsection

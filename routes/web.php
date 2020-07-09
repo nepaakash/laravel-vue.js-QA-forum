@@ -32,4 +32,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/questions', 'QuestionController@viewAll')->name('ViewQuestions');
+Route::match(['get', 'post'],'/questions/create', 'QuestionController@create')->name('CreateQuestions');
+
 

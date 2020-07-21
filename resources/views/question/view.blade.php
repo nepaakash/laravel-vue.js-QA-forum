@@ -41,7 +41,7 @@
                     <h3 class="mt-0"><a href="{{$questions->url}}">{{$questions->title}}</a></h3>
                     <div class=ml-auto>
                     <a href="{{route('EditQuestions',$questions->id)}}" class="btn btn-sm btn-outline-info">Edit </a>
-                    <form style="display:inline;" action="{{route('DeleteQuestions',$questions->id)}}" method="post">
+                    <form style="display:inline;" action="{{route('DeleteQuestions',$questions->id)}}" method="get">
 
                     @csrf
                     <a href="javascript:" onclick="ram()"  rel="{{$questions->id}}" rel1="delete-question" class="deleteRecord btn btn-sm btn-outline-info ">Delete </a>
@@ -103,22 +103,13 @@
 .then((willDelete) => {
   if (willDelete) {
            
-    $.ajax({
-  type: "POST",
-  url: 'delete-question' + "/" + id,
-  data: {
-        "_token": "{{ csrf_token() }}"
-        
-        },
+   
 
-        success:function(){
-            window.location.reload();
-            swal("Question deleted Successfully", {
-      icon: "success",
-      button: false,
-    });}
+       
+          window.location.href = "delete-question/"  + id;
+            
         
-});
+
 
 
    

@@ -21,6 +21,7 @@ class QuestionController extends Controller
 
     public function create(Request $request){
             if ($request->isMethod('post')){
+                
                 $validatedData = $request->validate([
                     'title' => 'required|max:255|unique:questions',
                     'body' => 'required',
@@ -38,9 +39,14 @@ class QuestionController extends Controller
     }
 
     public function edit(Request $request,$id){
+        
+
         $question= Question::findorFail($id);
+        $this->authorize('edit',$question);
         
         if ($request->isMethod('post')){
+        $this->authorize('update',$question);
+
             $validatedData = $request->validate([
                 'title' => 'required|max:255',
                 'body' => 'required',
@@ -58,9 +64,12 @@ class QuestionController extends Controller
 }
 
 public function delete($id){
+    
+
     $question= Question::findorFail($id);
+    $this->authorize('delete',$question);
     $question->delete();
-    return "success";
+    return redirect()->route('ViewQuestions')->with('flash_message','Question Deleted');;
 }
 
 public function index(Question $question){

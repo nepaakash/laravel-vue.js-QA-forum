@@ -33,8 +33,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/questions', 'QuestionController@viewAll')->name('ViewQuestions');
 Route::match(['get', 'post'],'/questions/create', 'QuestionController@create')->name('CreateQuestions');
-Route::match(['get', 'post'],'/questions/{id}/edit', 'QuestionController@edit')->name('EditQuestions');
-Route::post('/delete-question/{id}', 'QuestionController@delete')->name('DeleteQuestions');
+Route::match(['get', 'post'],'/questions/edit/{id}', 'QuestionController@edit')->name('EditQuestions');
+Route::get('/delete-question/{id}', 'QuestionController@delete')->name('DeleteQuestions');
 Route::get('/questions/{slug}', 'QuestionController@index')->name('IndexQuestions');
 
 

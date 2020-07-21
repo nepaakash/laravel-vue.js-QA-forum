@@ -2,7 +2,6 @@
 @section('css')
 
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.css">
 
     
 
@@ -36,14 +35,31 @@
                         {{$questions->views."".str_plural('view',$questions->views)}}
                        </div>
                    </div>
+                  
                     <div class="media-body">
+                    <div class="d-flex align-items-center">
                     <h3 class="mt-0"><a href="{{$questions->url}}">{{$questions->title}}</a></h3>
-                    <p class="lead">Asked By <a href="{{$questions->user->url}}">{{$questions->user->name}}</a></p>
-                    <small class="text-muted">{{$questions->created_date}}</small>
-                      {{str_limit($questions->body,250)}}
-                      
+                    <div class=ml-auto>
+                    <a href="{{route('EditQuestions',$questions->id)}}" class="btn btn-sm btn-outline-info">Edit </a>
+                    <form style="display:inline;" action="{{route('DeleteQuestions',$questions->id)}}" method="post">
+
+                    @csrf
+                    <a href="javascript:" onclick="ram()"  rel="{{$questions->id}}" rel1="delete-question" class="deleteRecord btn btn-sm btn-outline-info ">Delete </a>
+                    </form>
+                    
                     </div>
-                   </div>
+                    </div>
+                   
+                    
+                    
+                     
+                    
+                    <p class="lead">Asked By <a href="{{$questions->user->url}}">{{$questions->user->name}}</a>
+                    <small class="text-muted">{{$questions->created_date}}</small></p>
+                      {{str_limit($questions->body,250)}}
+                      </div>
+                      </div>
+                   
                    @endforeach
                    {{$question->links()}}
 
@@ -55,12 +71,62 @@
 </div>
 @endsection
 @section('scripts')
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
         @if(session('flash_message'))
         swal("Success!", "{!! session('flash_message') !!}", "success")
         @endif
 
+    </script>
+
+<script>
+     $('.deleteRecord').click(function () {
+         
+       
+    });
+
+    function ram(){
+        var id = $('.deleteRecord').attr('rel');
+       
+
+            swal({
+  title: "Are you sure?",
+  text: "Once deleted, you will not be able to recover this question!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true,
+})
+.then((willDelete) => {
+  if (willDelete) {
+           
+    $.ajax({
+  type: "POST",
+  url: 'delete-question' + "/" + id,
+  data: {
+        "_token": "{{ csrf_token() }}"
+        
+        },
+
+        success:function(){
+            window.location.reload();
+            swal("Question deleted Successfully", {
+      icon: "success",
+      button: false,
+    });}
+        
+});
+
+
+   
+  } else {
+    swal("Your imaginary file is safe!");
+  }
+});
+    }
     </script>
 
 @endsection

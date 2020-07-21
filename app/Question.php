@@ -1,6 +1,7 @@
 <?php
 
 namespace App;
+use Parsedown;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +18,7 @@ class Question extends Model
     }
 
     public function getUrlAttribute(){
-        return route("ViewQuestions",$this->id);
+        return route("IndexQuestions",$this->slug);
     }
 
     public function getCreatedDateAttribute(){
@@ -33,5 +34,9 @@ class Question extends Model
         }
 
         return "unanswered";
+    }
+
+    public function getBodyHtmlAttribute(){
+        return \Parsedown::instance()->text($this->body);
     }
 }

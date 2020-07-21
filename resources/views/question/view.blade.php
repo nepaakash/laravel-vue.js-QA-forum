@@ -40,14 +40,21 @@
                     <div class="d-flex align-items-center">
                     <h3 class="mt-0"><a href="{{$questions->url}}">{{$questions->title}}</a></h3>
                     <div class=ml-auto>
+                    @can('edit',$questions)
+
                     <a href="{{route('EditQuestions',$questions->id)}}" class="btn btn-sm btn-outline-info">Edit </a>
+                    @endcan
+
+                    @can('delete',$questions)
+
                     <form style="display:inline;" action="{{route('DeleteQuestions',$questions->id)}}" method="get">
 
                     @csrf
                     <a href="javascript:" onclick="ram()"  rel="{{$questions->id}}" rel1="delete-question" class="deleteRecord btn btn-sm btn-outline-info ">Delete </a>
                     </form>
-                    
+                    @endcan
                     </div>
+                    
                     </div>
                    
                     

@@ -9,7 +9,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                 <div class="d-flex align-items-center">
@@ -28,7 +28,7 @@
                        </div>
                    
                    <div class="status {{$questions->status}}">
-                        <strong>{{$questions->answers}}</strong>{{str_plural('answer',$questions->answers)}}
+                        <strong>{{$questions->answers_count}}</strong>{{str_plural('answer',$questions->answers_count)}}
                        </div>
                    
                    <div class="views">
@@ -66,7 +66,7 @@
                       {{str_limit($questions->body,250)}}
                       </div>
                       </div>
-                   
+                   <hr>
                    @endforeach
                    {{$question->links()}}
 
